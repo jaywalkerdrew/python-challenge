@@ -4,6 +4,7 @@ import os
 financeInput = os.path.join("Resources", "budget_data.csv")
 financeOutput = os.path.join("analysis", "analysis.txt")
 
+# initialize variables
 totalMonths = 0
 total = 0
 previousProfit = 0.00
@@ -14,6 +15,7 @@ greatestDec = 0
 # open CSV for read
 with open(financeInput) as csvFile:
     reader = csv.reader(csvFile)
+    
     # skip the header row
     header = next(reader)
 
@@ -26,9 +28,10 @@ with open(financeInput) as csvFile:
         total = total + currentProfit
         
         # update current change in profit/loss and add to the list
-        # if avoids adding an unnecessary item to the list
+        # 'if' avoids adding a change to the list during the first iteration 
         if totalMonths == 1:
             currentChange = 0
+        
         # update as usual otherwise    
         else:
             currentChange = currentProfit - previousProfit

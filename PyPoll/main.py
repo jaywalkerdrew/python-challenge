@@ -4,7 +4,7 @@ import os
 electionInput = os.path.join("Resources", "election_data.csv")
 electionOutput = os.path.join("analysis", "analysis.txt")
 
-# start with important variables, candidateList as a dictionary for ease of use
+# initialize variables
 totalVotes = 0
 candidateList = {}
 
