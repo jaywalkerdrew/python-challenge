@@ -46,6 +46,7 @@ with open(financeInput) as csvFile:
         if currentChange > greatestInc:
             greatestInc = currentChange
             greatestIncMonth = row[0]
+            
         # otherwise compare change to greatest change decrease
         elif currentChange < greatestDec:
             greatestDec = currentChange
