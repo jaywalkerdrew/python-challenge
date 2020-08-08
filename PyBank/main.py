@@ -6,7 +6,7 @@ financeOutput = os.path.join("analysis", "analysis.txt")
 
 totalMonths = 0
 total = 0
-previousMonth = 0.00
+previousProfit = 0.00
 monthlyChange = []
 greatestInc = 0
 greatestDec = 0
@@ -15,28 +15,56 @@ greatestDec = 0
 with open(financeInput) as csvFile:
     reader = csv.reader(csvFile)
     # skip the header row
-    next(reader)
+    header = next(reader)
 
     for row in reader:
-        currentMonth = int(row[1])
+        # find our current profit/loss, make it an integer
+        currentProfit = int(row[1])
 
+        # update totals
         totalMonths = totalMonths + 1
-        total = total + currentMonth
-        monthlyChange.append(currentMonth - previousMonth)
+        total = total + currentProfit
+        
+        # update current change in profit/loss and add to the list
+        # if avoids adding an unnecessary item to the list
+        if totalMonths == 1:
+            currentChange = 0
+        # update as usual otherwise    
+        else:
+            currentChange = currentProfit - previousProfit
+            monthlyChange.append(currentChange)
+        
+        # assign the current month as previous for the next loop
+        previousProfit = currentProfit
 
-        if currentMonth > greatestInc:
-            greatestInc = currentMonth
+        # compare change to greatest change increase
+        if currentChange > greatestInc:
+            greatestInc = currentChange
             greatestIncMonth = row[0]
-
-        elif currentMonth < greatestDec:
-            greatestDec = currentMonth
+        # otherwise compare change to greatest change decrease
+        elif currentChange < greatestDec:
+            greatestDec = currentChange
             greatestDecMonth = row[0]
 
-        previousMonth = currentMonth
+#calculate the average change and round to two decimals
+averageChange = round(sum(monthlyChange) / len(monthlyChange), 2)
 
-print(totalMonths)
-print(total)
+# print the financial results
+print("Financial Analysis")
+print("----------------------------")
+print(f"Total Months: {totalMonths}")
+print(f"Total: ${total}")
+print(f"Average Change: ${averageChange}")
+print(f"Greatest Increase in Profits: {greatestIncMonth} (${greatestInc})")
+print(f"Greatest Decrease in Profits: {greatestDecMonth} (${greatestDec})")
 
-
-
-        
+# output to a text file
+with open(financeOutput, "w") as out:
+    out.write("Financial Analysis\n")
+    out.write("----------------------------\n")
+    out.write(f"Total Months: {totalMonths}\n")
+    out.write(f"Total: ${total}\n")
+    out.write(f"Average Change: ${averageChange}\n")
+    out.write(f"Greatest Increase in Profits: {greatestIncMonth} (${greatestInc})\n")
+    out.write(f"Greatest Decrease in Profits: {greatestDecMonth} (${greatestDec})\n")
+out.close()        

@@ -4,15 +4,15 @@ import os
 electionInput = os.path.join("Resources", "election_data.csv")
 electionOutput = os.path.join("analysis", "analysis.txt")
 
+# start with important variables, candidateList as a dictionary for ease of use
 totalVotes = 0
 candidateList = {}
-# create variables - totalVotes int, candidateList = {candidate: votes}
 
 # open CSV for read
 with open(electionInput) as csvFile:
     reader = csv.reader(csvFile)
     # skip the header row
-    next(reader)
+    header = next(reader)
 
     for row in reader:
         # increment total votes and find who was voted for
@@ -31,10 +31,6 @@ with open(electionInput) as csvFile:
             addVote = candidateList[currentCandidate] + 1
             voteAdded = {currentCandidate: addVote}
             candidateList.update(voteAdded)
-
-# Testing data
-# print (totalVotes)        
-# print (candidateList)
 
 # create a dict with the same keys, but store candidate's percent of votes
 candidateVotePercent = {}
