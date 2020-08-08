@@ -32,18 +32,23 @@ with open(electionInput) as csvFile:
             voteAdded = {currentCandidate: addVote}
             candidateList.update(voteAdded)
 
+# Testing data
 # print (totalVotes)        
 # print (candidateList)
 
+# create a dict with the same keys, but store candidate's percent of votes
 candidateVotePercent = {}
 for candidate in candidateList.keys():
     candidateVotes = candidateList[candidate]
     percent = candidateVotes / totalVotes
     candidateVotePercent.update({candidate: percent})
 
+# locate the winning candidate
 winner = max(candidateList, key=candidateList.get)
+# obtain a sorted list of the candidates, winner to loser
 sortedCandidates = sorted(candidateList, key=candidateList.__getitem__, reverse=True)
 
+# print the election results
 print("Election Results")
 print("-------------------------")
 print(f"Total Votes: {totalVotes}")
@@ -54,6 +59,7 @@ print("-------------------------")
 print(f"Winner: {winner}")
 print("-------------------------")
 
+# output to a text file
 with open(electionOutput, "w") as out:
     out.write("Election Results\n")
     out.write("-------------------------\n")
