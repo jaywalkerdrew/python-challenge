@@ -11,10 +11,13 @@ candidateList = {}
 # open CSV for read
 with open(electionInput) as csvFile:
     reader = csv.reader(csvFile)
+
     # skip the header row
     header = next(reader)
 
+    #loop through each row of data/each vote submitted
     for row in reader:
+
         # increment total votes and find who was voted for
         totalVotes = totalVotes +1
         currentCandidate = row[2]
@@ -34,13 +37,18 @@ with open(electionInput) as csvFile:
 
 # create a dict with the same keys, but store candidate's percent of votes
 candidateVotePercent = {}
+
+# loop through the list of candidates
 for candidate in candidateList.keys():
+
+    #calculate the percent of votes and store in the dictionary
     candidateVotes = candidateList[candidate]
     percent = candidateVotes / totalVotes
     candidateVotePercent.update({candidate: percent})
 
 # locate the winning candidate
 winner = max(candidateList, key=candidateList.get)
+
 # obtain a sorted list of the candidates, winner to loser
 sortedCandidates = sorted(candidateList, key=candidateList.__getitem__, reverse=True)
 

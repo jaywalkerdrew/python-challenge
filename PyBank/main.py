@@ -18,8 +18,10 @@ with open(financeInput) as csvFile:
     
     # skip the header row
     header = next(reader)
-
+    
+    # loop through each row/month of data
     for row in reader:
+        
         # find our current profit/loss, make it an integer
         currentProfit = int(row[1])
 
